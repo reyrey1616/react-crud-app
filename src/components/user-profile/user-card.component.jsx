@@ -4,14 +4,15 @@ import {
   CardContainer,
   CardImage,
   TextContainer,
-} from "./card.styles";
+} from "./user-card.styles";
 
 const Card = ({
-  data: { firstName, middleName, lastName, email, age, id },
+  data: { firstName, middleName, lastName, email, age, imageUrl },
+  ...otherProps
 }) => (
-  <CardWrapper>
+  <CardWrapper {...otherProps}>
     <CardContainer>
-      <CardImage imageUrl={`https://robohash.org/${id}?200x200`} />
+      <CardImage imageUrl={imageUrl} />
       <TextContainer>
         <p className="big-text"> {email} </p>
         <p className="normal-text">

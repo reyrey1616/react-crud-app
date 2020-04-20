@@ -8,6 +8,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case UserActionTypes.ADD_USER:
       return { ...state, payload: action.payload };
+    case UserActionTypes.FETCH_USERS:
+      return { ...state, payload: action.payload };
     default:
       return state;
   }

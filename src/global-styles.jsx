@@ -5,8 +5,14 @@ export const GlobalStyles = createGlobalStyle`
       body {
             padding: 0;
             margin: 0;
+            font-family: 'Montserrat', sans-serif;
       }
+      .header-link {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
 
+      }
 
       .big-text {
             font-size: 18px; 

@@ -1,5 +1,5 @@
 import styled from "styled-components";
 
-export const FriendListContainer = styled.div`
+export const UserListContainer = styled.div`
   display: flex;
 `;

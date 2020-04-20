@@ -1,5 +1,7 @@
-import React from "react";
-import FriendList from "../../components/friend-list/friend-list.component";
+import React, { useEffect } from "react";
+import FriendList from "../../components/users-list/users-list.component";
+import { fetchUsers } from "../../redux/users/user.actions";
+
 const FRIEND_LIST = [
   {
     id: 1,
@@ -31,11 +33,16 @@ const FRIEND_LIST = [
   },
 ];
 
-const HomePage = () => (
-  <div className="page-layout">
-    <h1>Friend List</h1>
-    <FriendList data={FRIEND_LIST} />
-  </div>
-);
+const HomePage = ({}) => {
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
+  return (
+    <div className="page-layout">
+      <h1> Users</h1>
+      <FriendList data={FRIEND_LIST} />
+    </div>
+  );
+};
 
 export default HomePage;
