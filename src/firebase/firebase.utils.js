@@ -1,4 +1,4 @@
-import { auth, firestore } from "./firebase.config";
+import { firestore } from "./firebase.config";
 
 // export const createUser = async (email, password, additionalData) => {
 //   try {
@@ -35,22 +35,20 @@ import { auth, firestore } from "./firebase.config";
 export const addNewUser = async (user) => {
   const userRef = await firestore.doc(`users/${user.email}`);
   const snapShot = await userRef.get();
-
   const createdAt = new Date();
   if (!snapShot.exists) {
     try {
       userRef.set({
         ...user,
-        imageUrl: createdAt,
+        createdAt,
       });
-
-      return { data: snapShot, status: true };
+      return { ...user, createdAt };
     } catch (error) {
-      return { data: error, status: true };
+      console.log("error creating user", error);
     }
   } else {
-    alert("Email is already in used!");
-    return { data: "Email is already in used!", status: true };
+    alert("Email is already in used");
+    return { exists: true };
   }
 };
 

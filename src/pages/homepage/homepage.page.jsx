@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import FriendList from "../../components/users-list/users-list.component";
-import { fetchUsers } from "../../redux/users/user.actions";
-
+import { fetchUsersStart } from "../../redux/users/user.actions";
+import { connect } from "react-redux";
 const FRIEND_LIST = [
   {
     id: 1,
@@ -33,10 +33,10 @@ const FRIEND_LIST = [
   },
 ];
 
-const HomePage = ({}) => {
+const HomePage = ({ fetchUsersStart }) => {
   useEffect(() => {
-    fetchUsers();
-  }, [fetchUsers]);
+    fetchUsersStart();
+  }, [fetchUsersStart]);
   return (
     <div className="page-layout">
       <h1> Users</h1>
@@ -45,4 +45,8 @@ const HomePage = ({}) => {
   );
 };
 
-export default HomePage;
+const mapDispatchToProps = (dispatch) => ({
+  fetchUsersStart: () => dispatch(fetchUsersStart()),
+});
+
+export default connect(null, mapDispatchToProps)(HomePage);

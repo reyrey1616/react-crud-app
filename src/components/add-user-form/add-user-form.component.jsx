@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import { FormContainer, ButtonContainer } from "./add-user-form.styles";
-import { addNewUser } from "../../firebase/firebase.utils";
+import { addNewUserStart } from "../../redux/users/user.actions";
 import ImageGenerator from "../image-generator/image-generator.component";
-const AddFriendForm = () => {
+const AddUserForm = ({ addNewUserStart }) => {
   const [data, setData] = useState({
     firstName: "",
     middleName: "",
@@ -19,10 +20,9 @@ const AddFriendForm = () => {
     firstName,
     middleName,
     lastName,
-    age,
     email,
+    age,
     password,
-    confirmPassword,
     imageUrl,
   } = data;
 
@@ -42,35 +42,31 @@ const AddFriendForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (password !== confirmPassword) {
+    if (password !== data.confirmPassword) {
       alert("Password not match");
       return;
     }
-    const userRef = await addNewUser({
+    addNewUserStart({
       firstName,
       middleName,
       lastName,
       email,
-      age,
       password,
+      age,
       imageUrl,
     });
-    const { data, status } = await userRef;
-    if (status) {
-      setData({
-        firstName: "",
-        middleName: "",
-        lastName: "",
-        email: "",
-        age: "",
-        password: "",
-        confirmPassword: "",
-        imageUrl: `https://robohash.org/${Math.floor(
-          Math.random() * 1000
-        )}?200x200`,
-      });
-    }
-    console.log(data);
+    setData({
+      firstName: "",
+      middleName: "",
+      lastName: "",
+      email: "",
+      age: "",
+      password: "",
+      confirmPassword: "",
+      imageUrl: `https://robohash.org/${Math.floor(
+        Math.random() * 1000
+      )}?200x200`,
+    });
   };
 
   return (
@@ -149,7 +145,7 @@ const AddFriendForm = () => {
             onChange={handleChange}
             type="password"
             name="confirmPassword"
-            value={confirmPassword}
+            value={data.confirmPassword}
             className="input-field"
             required
           />
@@ -170,4 +166,8 @@ const AddFriendForm = () => {
   );
 };
 
-export default AddFriendForm;
+const mapDispatchToProps = (dispatch) => ({
+  addNewUserStart: (user) => dispatch(addNewUserStart(user)),
+});
+
+export default connect(null, mapDispatchToProps)(AddUserForm);
