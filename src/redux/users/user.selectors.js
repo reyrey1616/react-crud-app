@@ -2,7 +2,9 @@ import { createSelector } from "reselect";
 
 const selectUser = (state) => state.users;
 
-export const selectAllUsers = createSelector(
+export const selectUsers = createSelector([selectUser], (user) => user.users);
+
+export const selectIsUsersLoaded = createSelector(
   [selectUser],
-  (user) => user.users
+  (users) => !!users.users
 );

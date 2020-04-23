@@ -5,7 +5,6 @@ import { GlobalStyles } from "./global-styles.jsx";
 import HomePage from "./pages/homepage/homepage.page";
 import SignUpPage from "./pages/sign-up/sign-up.page";
 import Header from "./components/header/header.component";
-
 const App = () => {
   return (
     <div className="App">

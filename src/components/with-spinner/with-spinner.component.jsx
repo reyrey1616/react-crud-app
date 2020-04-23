@@ -1,9 +1,14 @@
 import React from "react";
-import Spinner from "../spinner/spinner.component";
+import SpinnerComponent from "../spinner/spinner.component";
 
 const WithSpinner = (WrappedComponent) => {
   const Spinner = ({ isLoading, ...otherProps }) => {
-    return isLoading ? <Spinner /> : <WrappedComponent {...otherProps} />;
+    console.log(isLoading);
+    return isLoading ? (
+      <SpinnerComponent />
+    ) : (
+      <WrappedComponent {...otherProps} />
+    );
   };
 
   return Spinner;

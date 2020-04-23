@@ -1,7 +1,7 @@
 import UserActionTypes from "./user.types";
 
 const INITIAL_STATE = {
-  users: [],
+  users: null,
   error: null,
   isFetching: false,
 };
