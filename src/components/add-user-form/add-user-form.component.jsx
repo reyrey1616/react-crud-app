@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { connect } from "react-redux";
 import { FormContainer, ButtonContainer } from "./add-user-form.styles";
 import { addNewUserStart } from "../../redux/users/user.actions";
@@ -24,16 +24,18 @@ const AddUserForm = ({ addNewUserStart }) => {
     age,
     password,
     imageUrl,
+    confirmPassword,
   } = data;
 
-  const generateImage = () => {
+  const generateImage = useCallback(() => {
     setData({
       ...data,
       imageUrl: `https://robohash.org/${Math.floor(
         Math.random() * 1000
       )}?200x200`,
     });
-  };
+  }, [imageUrl]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setData({ ...data, [name]: value });
@@ -42,7 +44,7 @@ const AddUserForm = ({ addNewUserStart }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (password !== data.confirmPassword) {
+    if (password !== confirmPassword) {
       alert("Password not match");
       return;
     }
@@ -71,7 +73,7 @@ const AddUserForm = ({ addNewUserStart }) => {
 
   return (
     <FormContainer>
-      <h1>Add User</h1>
+      <h1>Add User: </h1>
       <form onSubmit={handleSubmit}>
         <div className="input-field-container">
           <label className="input-label"> Firstname: </label>
@@ -145,7 +147,7 @@ const AddUserForm = ({ addNewUserStart }) => {
             onChange={handleChange}
             type="password"
             name="confirmPassword"
-            value={data.confirmPassword}
+            value={confirmPassword}
             className="input-field"
             required
           />

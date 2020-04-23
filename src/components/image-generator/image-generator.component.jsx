@@ -13,4 +13,4 @@ const ImageGenerator = ({ data, generateImage }) => {
   );
 };
 
-export default ImageGenerator;
+export default React.memo(ImageGenerator);

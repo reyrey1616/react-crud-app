@@ -7,8 +7,9 @@ const HomePage = ({ fetchUsersStart }) => {
   useEffect(() => {
     setTimeout(() => {
       fetchUsersStart();
-    }, 2500);
+    }, 500);
   }, [fetchUsersStart]);
+
   return (
     <div className="page-layout">
       <h1> Users</h1>
