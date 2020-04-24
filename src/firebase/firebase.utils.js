@@ -32,6 +32,7 @@ import { firestore } from "./firebase.config";
 //   }
 // };
 
+// ADD NEW USER
 export const addNewUser = async (user) => {
   const userRef = await firestore.doc(`users/${user.email}`);
   const snapShot = await userRef.get();
@@ -52,6 +53,7 @@ export const addNewUser = async (user) => {
   }
 };
 
+// GET USERS
 export const getUsers = async () => {
   const userRef = await firestore.collection("users");
   const snapShot = await userRef.get();
@@ -60,6 +62,7 @@ export const getUsers = async () => {
   return users;
 };
 
+// EDIT USER
 export const editUser = async (user) => {
   const {
     firstName,
@@ -107,5 +110,15 @@ export const editUser = async (user) => {
         password,
       };
     }
+  }
+};
+
+export const deleteUser = async (user) => {
+  try {
+    const userRef = await firestore.doc(`users/${user.email}`).delete();
+    console.log("deleted user: ", userRef);
+    return { success: true };
+  } catch (error) {
+    console.log(error);
   }
 };

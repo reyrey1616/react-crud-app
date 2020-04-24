@@ -1,5 +1,10 @@
 import { takeLatest, all, call, put } from "redux-saga/effects";
-import { getUsers, addNewUser, editUser } from "../../firebase/firebase.utils";
+import {
+  getUsers,
+  addNewUser,
+  editUser,
+  deleteUser,
+} from "../../firebase/firebase.utils";
 import {
   fetchUsersSuccess,
   fetchUsersFailure,
@@ -7,6 +12,8 @@ import {
   addNewUserFailure,
   editUserSuccess,
   editUserFailure,
+  deleteUserSuccess,
+  deleteUserFailure,
 } from "./user.actions";
 import UserActionTypes from "./user.types";
 
@@ -49,6 +56,17 @@ export function* editUserAsync({ payload }) {
   }
 }
 
+export function* deleteUserAsync({ payload }) {
+  try {
+    const userDelete = yield call(deleteUser, payload);
+    if (userDelete.success) {
+      yield put(deleteUserSuccess(payload));
+    }
+  } catch (error) {
+    yield put(deleteUserFailure(error));
+  }
+}
+
 export function* addUserStart() {
   yield takeLatest(UserActionTypes.ADD_USER_START, addUserAsync);
 }
@@ -61,6 +79,14 @@ export function* editUserStart() {
   yield takeLatest(UserActionTypes.EDIT_USER_START, editUserAsync);
 }
 
+export function* deleteUserStart() {
+  yield takeLatest(UserActionTypes.DELETE_USER_START, deleteUserAsync);
+}
 export function* userSagas() {
-  yield all([call(fetchUserStart), call(addUserStart), call(editUserStart)]);
+  yield all([
+    call(fetchUserStart),
+    call(addUserStart),
+    call(editUserStart),
+    call(deleteUserStart),
+  ]);
 }

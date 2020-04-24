@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { deleteUserStart } from "../../redux/users/user.actions";
 import {
   CardWrapper,
   CardContainer,
@@ -9,6 +11,7 @@ import {
 import { NavLink } from "react-router-dom";
 const Card = ({
   data: { firstName, middleName, lastName, email, age, imageUrl },
+  deleteUser,
   ...otherProps
 }) => (
   <CardWrapper {...otherProps}>
@@ -27,10 +30,28 @@ const Card = ({
         <NavLink className="default-button" to={`/edit-user/${email}`}>
           Edit
         </NavLink>
-        <button className="default-button">Delete</button>
+        <button
+          className="default-button"
+          onClick={() =>
+            deleteUser({
+              firstName,
+              middleName,
+              lastName,
+              email,
+              age,
+              imageUrl,
+            })
+          }
+        >
+          Delete
+        </button>
       </ActionsContainer>
     </CardContainer>
   </CardWrapper>
 );
 
-export default React.memo(Card);
+const mapDispatchToProps = (dispatch) => ({
+  deleteUser: (user) => dispatch(deleteUserStart(user)),
+});
+
+export default connect(null, mapDispatchToProps)(React.memo(Card));
