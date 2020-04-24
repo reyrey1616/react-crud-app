@@ -29,7 +29,32 @@ export const fetchUsersFailure = (error) => ({
   payload: error,
 });
 
-export const deleteUser = (user) => ({
-  type: UserActionTypes.DELETE_USER,
+export const editUserStart = (user) => ({
+  type: UserActionTypes.EDIT_USER_START,
   payload: user,
+});
+
+export const editUserSuccess = (user) => ({
+  type: UserActionTypes.EDIT_USER_SUCCESS,
+  payload: user,
+});
+
+export const editUserFailure = (error) => ({
+  type: UserActionTypes.EDIT_USER_FAILURE,
+  payload: error,
+});
+
+export const deleteUserStart = (user) => ({
+  type: UserActionTypes.DELETE_USER_START,
+  payload: user,
+});
+
+export const deleteUserSuccess = (user) => ({
+  type: UserActionTypes.DELETE_USER_SUCCESS,
+  payload: user,
+});
+
+export const deleteUserFailure = (error) => ({
+  type: UserActionTypes.DELETE_USER_FAILURE,
+  payload: error,
 });

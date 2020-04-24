@@ -1,20 +1,14 @@
 import React, { useState, useCallback } from "react";
 import { connect } from "react-redux";
-import { FormContainer, ButtonContainer } from "./add-user-form.styles";
-import { addNewUserStart } from "../../redux/users/user.actions";
+import { FormContainer, ButtonContainer } from "./edit-user-form.styles";
+import { editUserStart } from "../../redux/users/user.actions";
 import ImageGenerator from "../image-generator/image-generator.component";
-const AddUserForm = ({ addNewUserStart }) => {
+const EditUserForm = ({ editUserStart, user }) => {
   const [data, setData] = useState({
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    email: "",
-    age: "",
-    password: "",
-    confirmPassword: "",
-    imageUrl: `https://robohash.org/${Math.floor(
-      Math.random() * 1000
-    )}?200x200`,
+    ...user,
+    imageUrl: user.imageUrl,
+    confirmPassword: user.password,
+    newEmail: user.email,
   });
   const {
     firstName,
@@ -25,6 +19,7 @@ const AddUserForm = ({ addNewUserStart }) => {
     password,
     imageUrl,
     confirmPassword,
+    newEmail,
   } = data;
 
   const generateImage = useCallback(() => {
@@ -48,7 +43,7 @@ const AddUserForm = ({ addNewUserStart }) => {
       alert("Password not match");
       return;
     }
-    addNewUserStart({
+    editUserStart({
       firstName,
       middleName,
       lastName,
@@ -56,6 +51,7 @@ const AddUserForm = ({ addNewUserStart }) => {
       password,
       age,
       imageUrl,
+      newEmail,
     });
     setData({
       firstName: "",
@@ -73,7 +69,7 @@ const AddUserForm = ({ addNewUserStart }) => {
 
   return (
     <FormContainer>
-      <h1>Add User</h1>
+      <h1>Edit User</h1>
       <form onSubmit={handleSubmit}>
         <div className="input-field-container">
           <label className="input-label"> Firstname: </label>
@@ -123,8 +119,8 @@ const AddUserForm = ({ addNewUserStart }) => {
           <label className="input-label"> Email: </label>
           <input
             type="email"
-            name="email"
-            value={email}
+            name="newEmail"
+            value={newEmail}
             onChange={handleChange}
             className="input-field"
             required
@@ -169,7 +165,7 @@ const AddUserForm = ({ addNewUserStart }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  addNewUserStart: (user) => dispatch(addNewUserStart(user)),
+  editUserStart: (user) => dispatch(editUserStart(user)),
 });
 
-export default connect(null, mapDispatchToProps)(AddUserForm);
+export default connect(null, mapDispatchToProps)(EditUserForm);

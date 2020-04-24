@@ -1,9 +1,11 @@
 import React from "react";
-import AddFriendForm from "../../components/add-user-form/add-user-form.component";
-const SignUp = () => (
-  <div className="page-layout sign-up-page">
-    <AddFriendForm />
-  </div>
-);
+import AddUserForm from "../../components/add-user-form/add-user-form.component";
+const SignUp = ({ match }) => {
+  return (
+    <div className="page-layout sign-up-page">
+      <AddUserForm />
+    </div>
+  );
+};
 
 export default SignUp;

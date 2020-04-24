@@ -3,6 +3,9 @@ import styled from "styled-components";
 export const CardWrapper = styled.div`
   padding: 1em;
   width: 25%;
+  @media (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 export const CardContainer = styled.div`
@@ -23,4 +26,16 @@ export const CardImage = styled.div`
 
 export const TextContainer = styled.div`
   padding: 1em;
+`;
+
+export const ActionsContainer = styled.div`
+  width: 100%;
+  padding: 1em;
+  margin: 10px;
+  display: flex;
+  justify-content: space-around;
+
+  a {
+    text-decoration: none;
+  }
 `;

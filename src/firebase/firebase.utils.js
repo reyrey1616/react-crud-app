@@ -59,3 +59,53 @@ export const getUsers = async () => {
 
   return users;
 };
+
+export const editUser = async (user) => {
+  const {
+    firstName,
+    middleName,
+    lastName,
+    email,
+    newEmail,
+    age,
+    password,
+  } = user;
+  const newUserRef = await firestore.doc(`users/${newEmail}`);
+  const newUserSnapShot = await newUserRef.get();
+  const userRef = await firestore.doc(`users/${email}`);
+
+  const updateUserData = (email) => {
+    try {
+      userRef.set({
+        email,
+        firstName,
+        middleName,
+        lastName,
+        age,
+        password,
+      });
+    } catch (error) {
+      console.log("Error updating user", error);
+    }
+  };
+
+  if (user.newEmail === user.email) {
+    updateUserData(email);
+    return { firstName, middleName, lastName, email, age, password };
+  } else {
+    if (newUserSnapShot.exists) {
+      alert("Email is already in used!");
+      return { exists: true };
+    } else {
+      updateUserData(newEmail);
+      return {
+        firstName,
+        middleName,
+        lastName,
+        email: newEmail,
+        age,
+        password,
+      };
+    }
+  }
+};
